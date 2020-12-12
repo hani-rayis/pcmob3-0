@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text, FlatList} from "react-native";
+import { StyleSheet, Text, View, FlatList, SafeAreaView } from "react-native";
 
 const names = [
   "Aaran",
@@ -2742,47 +2742,53 @@ const names = [
   "Zuriel",
 ];
 
-const namesAsObjects = names.map((item) => {
+const namesAsObjects = names.map((item, index) => {
   return {
     name: item,
+    id: `${index}`,
   };
- });
- 
- export default function App() {
-  const renderName = ({ item }) => (
-    <View
-      style={{
-        padding: 20,
-        margin: 10,
-        backgroundColor: "lightsalmon",
-        borderBottomColor: "#999",
-        borderBottomWidth: 1,
-        shadowColor: "black",
-        shadowRadius: 5,
-        shadowOpacity: 0.2,
-        shadowOffset: { x: 0, height: 3 },
-      }}
-    >
-      <Text>{item.name}</Text>
-    </View>
-  );
- 
+});
+
+export default function App() {
+  console.log(namesAsObjects[0]);
+
+  function renderName({ item }) {
+    return (
+      <View
+        style={{
+          backgroundColor: "pink",
+          margin: 10,
+          padding: 10,
+          paddingTop: 20,
+          paddingBottom: 20,
+          borderRadius: 5,
+          borderBottomColor: "#999",
+          borderBottomWidth: 1,
+          shadowColor: "black",
+          shadowOpacity: 0.3,
+          shadowOffset: { height: 3 },
+        }}
+      >
+        <Text style={styles.name}>{item.name}</Text>
+      </View>
+    );
+  }
+
   return (
-    <FlatList
-      data={namesAsObjects}
-      renderItem={renderName}
-      keyExtractor={(item) => item.name}
-    />
+    <SafeAreaView>
+      <FlatList data={namesAsObjects} renderItem={renderName} />
+    </SafeAreaView>
   );
- }
- 
- const styles = StyleSheet.create({
+}
+
+const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
- });
- 
-
-
+  name:{
+    fontSize:30,
+    textAlign: "center",
+  }
+});
